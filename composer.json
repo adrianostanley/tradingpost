@@ -1,0 +1,19 @@
+{
+    "name": "vendor/trading-post",
+    "description": "Description of project TradingPost.",
+    "authors": [
+        {
+            "name": "Adriano",
+            "email": "your@email.here"
+        }
+    ],
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    }
+}
