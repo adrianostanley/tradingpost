@@ -16,17 +16,30 @@ abstract class Repository {
         $this->provider = $provider;
     }
 
+    protected abstract function getEntityClass() : string;
+    
     /**
      * This function must provide the entity table name.
      */
-    protected abstract function getTableName() : String;
+    protected abstract function getTableName() : string;
     
     public function listAll() : Array {
         $results = $this->provider->getResults($this->buildListAllQuery());
         
-        if (empty($resuls)) {
-            return [];
+        $entities = [];
+
+        foreach($results as $object) {
+            $entityClass = $this->getEntityClass();
+            
+            /** @var \TradingPost\Domain\Entity $entity */
+            $entity = new $entityClass();
+            
+            $entity->setPropertiesFromObject($object);
+            
+            $entities[] = $entity;
         }
+        
+        return $entities;
     }
     
     /**
@@ -39,6 +52,6 @@ abstract class Repository {
      * @return \String
      */
     protected function buildListAllQuery() : String {
-        return sprintf('SELECT * FROM %s', $this->getTableName());
+        return sprintf('SELECT * FROM %s_%s', $this->provider->getDatabasePrefix(), $this->getTableName());
     }
 }

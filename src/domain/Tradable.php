@@ -11,22 +11,33 @@ namespace TradingPost\Domain;
  */
 class Tradable extends Entity {
 
-    private Category $category;
-
-    public function setCategory(Category $category): void {
-        $this->category = $category;
+    private int $id = 0;
+    private string $name = '';
+    
+    public function setId(int $id): void {
+        $this->id = $id;
     }
 
-    public function getCategory(): Category {
-        return $this->category;
+    public function getId(): int {
+        return $this->id;
     }
 
-    public function getCategoryName(): String {
-        return isset($this->category) ? $this->category->getName() : 'Not available';
+    public function setName(String $name): void {
+        $this->name = $name;
     }
 
-    public function setPropertiesFromObject(Object $object): void {
+    public function getName(): String {
+        return $this->name;
+    }
+
+    public function setPropertiesFromObject(? Object $object): void {
+        if(isset($object->tradableId)) {
+            $this->id = (int) $object->tradableId;
+        }
         
+        if(isset($object->tradableName)) {
+            $this->name = $object->tradableName;
+        }
     }
 
 }

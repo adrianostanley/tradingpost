@@ -3,24 +3,21 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use TradingPost\Domain\Category;
 use TradingPost\Domain\Tradable;
 
 final class TradableTest extends TestCase {
 
-    public function testGetCategoryName(): void {
-        $category = new Category();
-        $category->setName('Consumable');
-
-        $tradable = new Tradable();
-        $tradable->setCategory($category);
-
-        $this->assertEquals('Consumable', $tradable->getCategoryName());
+    public function testGetClass() : void {
+        $this->assertSame('TradingPost\Domain\Tradable', (new Tradable())->getClass());
     }
 
-    public function testGetCategoryNameWithNoCategory(): void {
+    public function testSetPropertiesFromObject() : void {
+        $object = (object) ['tradableId' => '1', 'tradableName' => 'Consumable'];
+        
         $tradable = new Tradable();
-        $this->assertEquals('Not available', $tradable->getCategoryName());
+        $tradable->setPropertiesFromObject($object);
+        
+        $this->assertSame('Consumable', $tradable->getName());
     }
 
 }

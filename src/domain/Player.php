@@ -31,7 +31,7 @@ class Player extends Entity {
         $this->name = $name;
     }
 
-    public function setPropertiesFromObject(Object $object): void {
+    public function setPropertiesFromObject(? Object $object): void {
         
     }
 

@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use TradingPost\Repository\Repository;
-use TradingPost\Repository\DatabaseProvider;
 
 final class RepositoryTest extends TestCase {
 
     public function testFooRepository() : void {
         $repository = new FooRepository(new MockDatabaseProvider());
         
-        $this->assertEquals('SELECT * FROM foo', $repository->getListAllQuery());
+        $this->assertEquals('SELECT * FROM mockdb_foo', $repository->getListAllQuery());
     }
 }
 
@@ -24,11 +23,8 @@ final class FooRepository extends Repository {
     public function getListAllQuery() {
         return $this->buildListAllQuery();
     }
-}
 
-final class MockDatabaseProvider implements DatabaseProvider {
-    
-    public function getResults(String $sql) {
-        
+    protected function getEntityClass(): string {
+        return null;
     }
 }

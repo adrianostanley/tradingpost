@@ -12,6 +12,7 @@ namespace TradingPost\Domain;
 class Order extends Entity {
 
     private DateTime $createDate;
+    private int $id;
     private String $description;
     private Player $player;
     private int $price;
@@ -20,6 +21,10 @@ class Order extends Entity {
 
     public function getCreateDate(): DateTime {
         return $this->createDate;
+    }
+    
+    public function getId(): int {
+        return $this->id;
     }
 
     public function getDescription(): String {
@@ -49,6 +54,10 @@ class Order extends Entity {
     public function setDescription(String $description): void {
         $this->description = $description;
     }
+    
+    public function setId(int $id): void {
+        $this->id = $id;
+    }
 
     public function setPlayer(Player $player): void {
         $this->player = $player;
@@ -66,8 +75,12 @@ class Order extends Entity {
         $this->title = $title;
     }
 
-    public function setPropertiesFromObject(Object $object): void {
+    public function setPropertiesFromObject(? Object $object): void {
+        $this->tradable = new Tradable();
+        $this->tradable->setPropertiesFromObject($object);
         
+        $this->id = isset($object->categoryId) ? (int) $object->categoryId : null;
+        $this->name = $object->categoryName ?? null;
     }
 
 }
